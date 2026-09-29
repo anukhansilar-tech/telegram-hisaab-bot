@@ -28,7 +28,8 @@ from telegram.error import InvalidToken
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
 
 
-TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
+TOKEN = os.environ["TELEGRAM_BOT_TOKEN"].strip()
+
 
 vinimay_dar = 140.0
 fee_percent = 0
