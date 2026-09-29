@@ -28,7 +28,8 @@ from telegram.error import InvalidToken
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
 
 
-TOKEN = "8816348482:AAEKKOi_FOhh728obMg7my8jbva26eGPQaw"
+TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+
 
 
 vinimay_dar = 140.0
