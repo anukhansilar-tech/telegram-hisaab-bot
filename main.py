@@ -28,7 +28,9 @@ from telegram.error import InvalidToken
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
 
 
-TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+raw_token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+TOKEN = "".join(raw_token.split()).strip()
+
 
 
 
@@ -158,7 +160,7 @@ async def validate_token() -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(validate_token())
     app = ApplicationBuilder().token(TOKEN).build()
-    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_message))
+    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), hisaab_handler))
     app.run_polling()
+    
