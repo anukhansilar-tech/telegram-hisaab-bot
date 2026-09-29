@@ -31,7 +31,6 @@ from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filte
 TOKEN = "8816348482:AAEKKOi_FOhh728obMg7my8jbva26eGPQaw"
 
 
-
 vinimay_dar = 140.0
 fee_percent = 0
 
