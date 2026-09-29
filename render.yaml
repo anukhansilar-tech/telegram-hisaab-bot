@@ -1,0 +1,9 @@
+services:
+  - type: worker
+    name: telegram-hisaab-bot
+    runtime: python
+    buildCommand: pip install -e .
+    startCommand: python main.py
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
