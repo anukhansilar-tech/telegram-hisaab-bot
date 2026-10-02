@@ -1,10 +1,13 @@
-import asyncio
 import os
-import asyncio
+import re
 import threading
-from http.server import HTTPServer, BaseHTTPRequestHandler
-import threading
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from datetime import datetime
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+from telegram import Bot, Update
+from telegram.error import InvalidToken
+from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
+
 
 class SimpleHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -12,30 +15,20 @@ class SimpleHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(b"OK")
 
+
 def run_health_server():
     port = int(os.environ.get("PORT", 8080))
     server = HTTPServer(("0.0.0.0", port), SimpleHandler)
     server.serve_forever()
 
+
 threading.Thread(target=run_health_server, daemon=True).start()
-
-import os
-import re
-from datetime import datetime
-
-from telegram import Bot, Update
-from telegram.error import InvalidToken
-from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
-
 
 raw_token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 TOKEN = "".join(raw_token.split()).strip()
 ALLOWED_USER_ID = 8427088619
 
-
-
-
-vinimay_dar = 140.0
+vinimay_dar = 120.0
 fee_percent = 0
 
 # History lists
@@ -85,8 +78,13 @@ def get_hisaab_text() -> str:
 async def handle_message(
     update: Update, context: ContextTypes.DEFAULT_TYPE
 ) -> None:
-        global vinimay_dar, jama_list, nikasi_list
-            if not update.message or not update.message.text or update.effective_user.id != 8427088619: return
+    global vinimay_dar, jama_list, nikasi_list
+
+    if not update.message or not update.message.text:
+        return
+    if update.effective_user.id != ALLOWED_USER_ID:
+        return
+
     raw_text = update.message.text.strip()
     clean_text = re.sub(r"\[.*?\]\(.*?\)", "", raw_text).strip()
     user_name = (
@@ -145,7 +143,6 @@ async def handle_message(
         return
 
 
-
 async def validate_token() -> None:
     try:
         async with Bot(TOKEN) as bot:
@@ -161,4 +158,4 @@ if __name__ == "__main__":
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_message))
     app.run_polling()
-    
+            
