@@ -86,9 +86,8 @@ async def handle_message(
     update: Update, context: ContextTypes.DEFAULT_TYPE
 ) -> None:
         global vinimay_dar, jama_list, nikasi_list
-        if not update.message or not update.message.text or update.effective_user.id != 8427088619:
-        return
-
+        if not update.message or not update.message.text or update.effective_user.id != 8427088619: return
+            
     raw_text = update.message.text.strip()
 
 
