@@ -35,7 +35,7 @@ ALLOWED_USER_ID = 8427088619
 
 
 
-vinimay_dar = 100.0
+vinimay_dar = 140.0
 fee_percent = 0
 
 # History lists
